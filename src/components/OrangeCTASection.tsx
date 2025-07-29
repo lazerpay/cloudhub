@@ -1,11 +1,13 @@
 import React from 'react';
-import { Box, Typography, Stack, Container, Card, CardContent, CircularProgress, Alert } from '@mui/material';
+import { Box, Typography, Stack, Container, Card, CardContent } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useQuery } from '@apollo/client';
-import { GET_HOMEPAGE_SECTIONS, GetHomepageSectionsData } from '../graphql/queries';
+import { GET_HOMEPAGE_DATA, GetHomepageData } from '../graphql/homepage';
 import MentionsIcon from './icons/MentionsIcon';
 import PollsIcon from './icons/PollsIcon';
 import ResolveIcon from './icons/ResolveIcon';
+import LoadingSpinner from './LoadingSpinner';
+import { fallbackOrangeCTAData, errorMessages } from '../data/fallbackData';
 
 const CTAContainer = styled(Box)(({ theme }) => ({
   background: 'linear-gradient(315deg, #FB432C 0%, #FF591E 100%)',
@@ -98,20 +100,6 @@ const FeatureDescription = styled(Typography)(({ theme }) => ({
   color: '#737373'
 }));
 
-const LoadingContainer = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  minHeight: '400px'
-}));
-
-const ErrorContainer = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  minHeight: '400px',
-  padding: theme.spacing(4)
-}));
 
 const NotificationImage = styled('img')({
   width: '100%',
@@ -120,51 +108,23 @@ const NotificationImage = styled('img')({
 });
 
 const OrangeCTASection: React.FC = () => {
-  const { loading, error, data } = useQuery<GetHomepageSectionsData>(GET_HOMEPAGE_SECTIONS);
+  const { loading, error, data } = useQuery<GetHomepageData>(GET_HOMEPAGE_DATA);
 
-  if (loading) {
+  if (loading || error) {
     return (
       <CTAContainer>
-        <LoadingContainer>
-          <CircularProgress size={60} sx={{ color: 'white' }} />
-        </LoadingContainer>
-      </CTAContainer>
-    );
-  }
-
-  if (error) {
-    return (
-      <CTAContainer>
-        <ErrorContainer>
-          <Alert severity="error" sx={{ maxWidth: 600 }}>
-            Failed to load feedback dashboard content. Please try again later.
-          </Alert>
-        </ErrorContainer>
+        <LoadingSpinner 
+          variant="section" 
+          error={error} 
+          errorMessage={errorMessages.homepageSections}
+          size={60}
+        />
       </CTAContainer>
     );
   }
 
   const dashboardData = data?.homepage?.feedbackdashboardsection;
-  
-  // Fallback to static content if no data
-  const fallbackData = {
-    toptext: "Best time here",
-    title: "Better feedback at the right time.",
-    feedbackdashboardmentionscard: {
-      title: "Mentions",
-      description: "Mention anyone on your team to include them in a post."
-    },
-    feedbackdashboardpollscard: {
-      title: "Polls", 
-      description: "Get a quick gut check from the team on design options."
-    },
-    feedbackdashboardcommentscard: {
-      title: "Resolve comments",
-      description: "Mark comments as resolved to keep the conversation focused."
-    }
-  };
-
-  const content = dashboardData || fallbackData;
+  const content = dashboardData || fallbackOrangeCTAData;
 
   return (
     <CTAContainer>

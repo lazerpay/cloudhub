@@ -5,16 +5,16 @@ import {
 	Stack,
 	Container,
 	Avatar,
-	CircularProgress,
-	Alert,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useQuery } from "@apollo/client";
 import {
-	GET_HOMEPAGE_SECTIONS,
-	GetHomepageSectionsData,
+	GET_HOMEPAGE_DATA,
+	GetHomepageData,
 	HeroImage,
-} from "../graphql/queries";
+} from "../graphql/homepage";
+import LoadingSpinner from "./LoadingSpinner";
+import { fallbackTestimonialsData, staticImagePaths, errorMessages } from "../data/fallbackData";
 
 const TestimonialsContainer = styled(Box)(({ theme }) => ({
 	padding: theme.spacing(12, 0),
@@ -74,20 +74,6 @@ const AuthorTitle = styled(Typography)(({ theme }) => ({
 	color: "#737373",
 }));
 
-const LoadingContainer = styled(Box)(({ theme }) => ({
-	display: "flex",
-	justifyContent: "center",
-	alignItems: "center",
-	minHeight: "400px",
-}));
-
-const ErrorContainer = styled(Box)(({ theme }) => ({
-	display: "flex",
-	justifyContent: "center",
-	alignItems: "center",
-	minHeight: "400px",
-	padding: theme.spacing(4),
-}));
 
 interface TestimonialCardProps {
 	brandLogo?: HeroImage;
@@ -135,52 +121,24 @@ const TestimonialCardComponent: React.FC<TestimonialCardProps> = ({
 };
 
 const TestimonialsSection: React.FC = () => {
-	const { loading, error, data } = useQuery<GetHomepageSectionsData>(
-		GET_HOMEPAGE_SECTIONS
+	const { loading, error, data } = useQuery<GetHomepageData>(
+		GET_HOMEPAGE_DATA
 	);
 
-	if (loading) {
+	if (loading || error) {
 		return (
 			<TestimonialsContainer>
-				<LoadingContainer>
-					<CircularProgress size={60} />
-				</LoadingContainer>
-			</TestimonialsContainer>
-		);
-	}
-
-	if (error) {
-		return (
-			<TestimonialsContainer>
-				<ErrorContainer>
-					<Alert severity="error" sx={{ maxWidth: 600 }}>
-						Failed to load testimonials content. Please try again
-						later.
-					</Alert>
-				</ErrorContainer>
+				<LoadingSpinner 
+					variant="section" 
+					error={error} 
+					errorMessage={errorMessages.homepageSections}
+				/>
 			</TestimonialsContainer>
 		);
 	}
 
 	const testimonialsData = data?.homepage?.testimonialsection;
-
-	// Fallback to static content if no data
-	const fallbackData = {
-		leftbrandlogo: undefined,
-		leftusercomment:
-			"Cloudhub has emerged as an essential asset for the team at Patreon design. Amidst an accelerated expanding organization in which the product undergoes rapid changes, Campsite enables us to maintain visibility on what's transpiring across various teams — impeccably aligning with our pre-existing procedures.",
-		leftuseravatar: undefined,
-		leftusername: "Gabriel Valdivia",
-		leftuserdesignation: "Principal Product Designer, Patreon",
-		rightbrandlogo: undefined,
-		rightusercomment:
-			"Cloudhub has demonstrated exceptional worth in preserving open communication among designers regarding their current endeavors, a challenge that previously impeded our progress. It continually stands as a distinctive platform guiding our dialogue towards imagination and consistent review, an element I highly value. Moreover, it has accelerated our propensity for early-stage feedback beyond my expectations.",
-		rightuseravatar: undefined,
-		rightusername: "Buzz Usborne",
-		rightuserdesignation: "Principal Designer, Buildkite",
-	};
-
-	const content = testimonialsData || fallbackData;
+	const content = testimonialsData || fallbackTestimonialsData;
 
 	return (
 		<TestimonialsContainer>
@@ -192,8 +150,8 @@ const TestimonialsSection: React.FC = () => {
 						userAvatar={content.leftuseravatar}
 						userName={content.leftusername}
 						userDesignation={content.leftuserdesignation}
-						fallbackBrandLogo="/images/patreon-logo.svg"
-						fallbackAvatar="/images/gabriel-avatar.png"
+						fallbackBrandLogo={staticImagePaths.patreonLogo}
+						fallbackAvatar={staticImagePaths.gabrielAvatar}
 					/>
 
 					<TestimonialCardComponent
@@ -202,8 +160,8 @@ const TestimonialsSection: React.FC = () => {
 						userAvatar={content.rightuseravatar}
 						userName={content.rightusername}
 						userDesignation={content.rightuserdesignation}
-						fallbackBrandLogo="/images/buildkite-logo.svg"
-						fallbackAvatar="/images/buzz-avatar.png"
+						fallbackBrandLogo={staticImagePaths.buildkiteLogo}
+						fallbackAvatar={staticImagePaths.buzzAvatar}
 					/>
 				</TestimonialsGrid>
 			</Container>

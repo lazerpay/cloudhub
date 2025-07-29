@@ -1,9 +1,11 @@
 import React from 'react';
-import { Box, Typography, Stack, Container, Chip, Button, CircularProgress, Alert } from '@mui/material';
+import { Box, Typography, Stack, Container, Chip, Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useQuery } from '@apollo/client';
-import { GET_HOMEPAGE_SECTIONS, GetHomepageSectionsData } from '../graphql/queries';
+import { GET_HOMEPAGE_DATA, GetHomepageData } from '../graphql/homepage';
 import PlayIcon2 from './icons/PlayIcon2';
+import LoadingSpinner from './LoadingSpinner';
+import { fallbackFeedbackData, staticImagePaths, errorMessages } from '../data/fallbackData';
 
 const FeatureContainer = styled(Box)(({ theme }) => ({
   padding: theme.spacing(12, 0),
@@ -41,20 +43,6 @@ const FeatureChip = styled(Chip)(({ theme }) => ({
   width: 'fit-content'
 }));
 
-const LoadingContainer = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  minHeight: '400px'
-}));
-
-const ErrorContainer = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  minHeight: '400px',
-  padding: theme.spacing(4)
-}));
 
 const FeatureTitle = styled(Typography)(({ theme }) => ({
   fontSize: '54px',
@@ -109,41 +97,22 @@ const MockupImage = styled('img')({
 });
 
 const FeedbackFeature: React.FC = () => {
-  const { loading, error, data } = useQuery<GetHomepageSectionsData>(GET_HOMEPAGE_SECTIONS);
+  const { loading, error, data } = useQuery<GetHomepageData>(GET_HOMEPAGE_DATA);
 
-  if (loading) {
+  if (loading || error) {
     return (
       <FeatureContainer>
-        <LoadingContainer>
-          <CircularProgress size={60} />
-        </LoadingContainer>
-      </FeatureContainer>
-    );
-  }
-
-  if (error) {
-    return (
-      <FeatureContainer>
-        <ErrorContainer>
-          <Alert severity="error" sx={{ maxWidth: 600 }}>
-            Failed to load feedback section content. Please try again later.
-          </Alert>
-        </ErrorContainer>
+        <LoadingSpinner 
+          variant="section" 
+          error={error} 
+          errorMessage={errorMessages.homepageSections}
+        />
       </FeatureContainer>
     );
   }
 
   const feedbackData = data?.homepage?.feedbacksection;
-  
-  // Fallback to static content if no data
-  const fallbackData = {
-    tagtext: "Feedback",
-    title: "Better feedback at the right time.",
-    description: "Campsite has been instrumental in keeping designers aware of each others' work-in-progress in a way that was previously slowing us down. It's also one of the only channels where.",
-    ctatext: "See how it works"
-  };
-
-  const content = feedbackData || fallbackData;
+  const content = feedbackData || fallbackFeedbackData;
 
   return (
     <FeatureContainer>

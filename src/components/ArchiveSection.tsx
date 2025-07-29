@@ -5,16 +5,16 @@ import {
 	Stack,
 	Container,
 	Card,
-	CircularProgress,
-	Alert,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useQuery } from "@apollo/client";
 import {
-	GET_HOMEPAGE_SECTIONS,
-	GetHomepageSectionsData,
+	GET_HOMEPAGE_DATA,
+	GetHomepageData,
 	HeroImage,
-} from "../graphql/queries";
+} from "../graphql/homepage";
+import LoadingSpinner from "./LoadingSpinner";
+import { fallbackArchiveData, staticImagePaths, errorMessages } from "../data/fallbackData";
 
 const ArchiveContainer = styled(Box)(({ theme }) => ({
 	padding: theme.spacing(12, 0),
@@ -81,20 +81,6 @@ const ChartImage = styled("img")({
 	height: "auto",
 });
 
-const LoadingContainer = styled(Box)(({ theme }) => ({
-	display: "flex",
-	justifyContent: "center",
-	alignItems: "center",
-	minHeight: "400px",
-}));
-
-const ErrorContainer = styled(Box)(({ theme }) => ({
-	display: "flex",
-	justifyContent: "center",
-	alignItems: "center",
-	minHeight: "400px",
-	padding: theme.spacing(4),
-}));
 
 interface ArchiveCardProps {
 	title: string;
@@ -132,45 +118,24 @@ const ArchiveCardComponent: React.FC<ArchiveCardProps> = ({
 };
 
 const ArchiveSection: React.FC = () => {
-	const { loading, error, data } = useQuery<GetHomepageSectionsData>(
-		GET_HOMEPAGE_SECTIONS
+	const { loading, error, data } = useQuery<GetHomepageData>(
+		GET_HOMEPAGE_DATA
 	);
 
-	if (loading) {
+	if (loading || error) {
 		return (
 			<ArchiveContainer>
-				<LoadingContainer>
-					<CircularProgress size={60} />
-				</LoadingContainer>
-			</ArchiveContainer>
-		);
-	}
-
-	if (error) {
-		return (
-			<ArchiveContainer>
-				<ErrorContainer>
-					<Alert severity="error" sx={{ maxWidth: 600 }}>
-						Failed to load archive section content. Please try again
-						later.
-					</Alert>
-				</ErrorContainer>
+				<LoadingSpinner 
+					variant="section" 
+					error={error} 
+					errorMessage={errorMessages.homepageSections}
+				/>
 			</ArchiveContainer>
 		);
 	}
 
 	const archiveData = data?.homepage?.archivesection;
-
-	// Fallback to static content if no data
-	const fallbackData = {
-		title: "Your Archive of progress",
-		leftcardtitle: "Projects",
-		leftcardsubtitle: "Organize, follow, and archive.",
-		rightcardtitle: "Member profiles",
-		rightcardsubtitle: "Automatic portfolios of your work.",
-	};
-
-	const content = archiveData || fallbackData;
+	const content = archiveData || fallbackArchiveData;
 
 	return (
 		<ArchiveContainer>
@@ -182,7 +147,7 @@ const ArchiveSection: React.FC = () => {
 						title={content.leftcardtitle}
 						subtitle={content.leftcardsubtitle}
 						image={content.leftcardimage}
-						fallbackImageSrc="/images/projects-chart.svg"
+						fallbackImageSrc={staticImagePaths.projectsChart}
 						fallbackImageAlt="Projects overview chart showing monthly progress"
 					/>
 
@@ -190,7 +155,7 @@ const ArchiveSection: React.FC = () => {
 						title={content.rightcardtitle}
 						subtitle={content.rightcardsubtitle}
 						image={content.rightcardimage}
-						fallbackImageSrc="/images/member-profiles-chart.svg"
+						fallbackImageSrc={staticImagePaths.memberProfilesChart}
 						fallbackImageAlt="Member profiles analytics chart"
 					/>
 				</ArchiveGrid>

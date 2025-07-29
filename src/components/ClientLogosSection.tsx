@@ -1,8 +1,10 @@
 import React from 'react';
-import { Box, Typography, Stack, Container, CircularProgress, Alert } from '@mui/material';
+import { Box, Typography, Stack, Container } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useQuery } from '@apollo/client';
-import { GET_HOMEPAGE_SECTIONS, GetHomepageSectionsData, HeroImage } from '../graphql/queries';
+import { GET_HOMEPAGE_DATA, GetHomepageData, HeroImage } from '../graphql/homepage';
+import LoadingSpinner from './LoadingSpinner';
+import { fallbackClientTitle, staticImagePaths, errorMessages } from '../data/fallbackData';
 
 const ClientLogosContainer = styled(Box)(({ theme }) => ({
   padding: theme.spacing(8, 0, 12, 0),
@@ -88,20 +90,6 @@ const LogoImage = styled('img')(({ theme }) => ({
   }
 }));
 
-const LoadingContainer = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  minHeight: '200px'
-}));
-
-const ErrorContainer = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  minHeight: '200px',
-  padding: theme.spacing(4)
-}));
 
 interface LogoItemProps {
   image?: HeroImage;
@@ -119,62 +107,49 @@ const LogoItem: React.FC<LogoItemProps> = ({ image, fallbackSrc, alt }) => {
 };
 
 const ClientLogosSection: React.FC = () => {
-  const { loading, error, data } = useQuery<GetHomepageSectionsData>(GET_HOMEPAGE_SECTIONS);
+  const { loading, error, data } = useQuery<GetHomepageData>(GET_HOMEPAGE_DATA);
 
-  if (loading) {
+  if (loading || error) {
     return (
       <ClientLogosContainer>
-        <LoadingContainer>
-          <CircularProgress size={60} />
-        </LoadingContainer>
-      </ClientLogosContainer>
-    );
-  }
-
-  if (error) {
-    return (
-      <ClientLogosContainer>
-        <ErrorContainer>
-          <Alert severity="error" sx={{ maxWidth: 600 }}>
-            Failed to load client logos. Please try again later.
-          </Alert>
-        </ErrorContainer>
+        <LoadingSpinner 
+          variant="section" 
+          error={error} 
+          errorMessage={errorMessages.homepageSections}
+        />
       </ClientLogosContainer>
     );
   }
 
   const clientData = data?.homepage?.clientsection;
-  
-  // Fallback data
-  const fallbackTitle = "Loved By Designers At";
 
   return (
     <ClientLogosContainer>
       <Container maxWidth="xl">
         <SectionTitle>
-          {clientData?.title || fallbackTitle}
+          {clientData?.title || fallbackClientTitle}
         </SectionTitle>
         
         <LogosGrid>
           <LogosRow>
             <LogoItem 
               image={clientData?.crowdstrike}
-              fallbackSrc="/images/crowdstrike-logo.png"
+              fallbackSrc={staticImagePaths.crowdstrikeLogo}
               alt="Crowdstrike"
             />
             <LogoItem 
               image={clientData?.airbus}
-              fallbackSrc="/images/airbus-logo.png"
+              fallbackSrc={staticImagePaths.airbusLogo}
               alt="Airbus"
             />
             <LogoItem 
               image={clientData?.hays}
-              fallbackSrc="/images/hays-logo.svg"
+              fallbackSrc={staticImagePaths.haysLogo}
               alt="Hays"
             />
             <LogoItem 
               image={clientData?.sentry}
-              fallbackSrc="/images/sentry-logo.svg"
+              fallbackSrc={staticImagePaths.sentryLogo}
               alt="Sentry"
             />
           </LogosRow>
@@ -182,22 +157,22 @@ const ClientLogosSection: React.FC = () => {
           <LogosRow>
             <LogoItem 
               image={clientData?.medwing}
-              fallbackSrc="/images/medwing-logo.png"
+              fallbackSrc={staticImagePaths.medwingLogo}
               alt="Medwing"
             />
             <LogoItem 
               image={clientData?.cathaypacific}
-              fallbackSrc="/images/cathay-pacific-logo.png"
+              fallbackSrc={staticImagePaths.cathayPacificLogo}
               alt="Cathay Pacific"
             />
             <LogoItem 
               image={clientData?.liquidweb}
-              fallbackSrc="/images/liquid-web-logo.png"
+              fallbackSrc={staticImagePaths.liquidWebLogo}
               alt="Liquid Web"
             />
             <LogoItem 
               image={clientData?.autotrader}
-              fallbackSrc="/images/autotrader-logo.png"
+              fallbackSrc={staticImagePaths.autotraderLogo}
               alt="AutoTrader"
             />
           </LogosRow>

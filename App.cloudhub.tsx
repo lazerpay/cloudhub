@@ -7,9 +7,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import createCache from '@emotion/cache';
 import theme from './src/theme';
 import apolloClient from './src/lib/apollo';
-import CloudhubLandingPage from './src/components/CloudhubLandingPage';
-import PricingPage from './src/components/PricingPage';
-import LoginPage from './src/components/LoginPage';
+import { LandingPage, PricingPage, LoginPage } from './src/pages';
 
 const createEmotionCache = () => {
   return createCache({
@@ -28,10 +26,10 @@ const App: React.FC = () => {
           <CssBaseline />
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<CloudhubLandingPage />} />
+              <Route path="/" element={<LandingPage />} />
               <Route path="/pricing" element={<PricingPage />} />
               <Route path="/login" element={<LoginPage />} />
-              <Route path="*" element={<CloudhubLandingPage />} />
+              <Route path="*" element={<LandingPage />} />
             </Routes>
           </BrowserRouter>
         </ThemeProvider>

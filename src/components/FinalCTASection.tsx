@@ -1,9 +1,12 @@
 import React from 'react';
-import { Box, Typography, Stack, Container, Button, CircularProgress, Alert } from '@mui/material';
+import { Box, Typography, Stack, Container } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
-import { GET_HOMEPAGE_SECTIONS, GetHomepageSectionsData, HeroImage } from '../graphql/queries';
+import { GET_HOMEPAGE_DATA, GetHomepageData, HeroImage } from '../graphql/homepage';
+import LoadingSpinner from './LoadingSpinner';
+import Button from './ui/Button';
+import { fallbackFinalCTAData, staticImagePaths, errorMessages } from '../data/fallbackData';
 
 const CTAContainer = styled(Box)(({ theme }) => ({
   background: 'linear-gradient(315deg, #FB432C 0%, #FF591E 100%)',
@@ -82,27 +85,6 @@ const CTASubtitle = styled(Typography)(({ theme }) => ({
   }
 }));
 
-const CTAButton = styled(Button)(({ theme }) => ({
-  backgroundColor: theme.palette.common.white,
-  color: theme.palette.text.primary,
-  fontSize: '16px',
-  fontWeight: 600,
-  letterSpacing: '-0.2px',
-  textTransform: 'none',
-  padding: '12px 32px',
-  borderRadius: '32px',
-  width: 'fit-content',
-  minWidth: 'auto',
-  marginTop: theme.spacing(2),
-  [theme.breakpoints.down('sm')]: {
-    fontSize: '14px',
-    padding: '10px 24px',
-    marginTop: theme.spacing(1.5)
-  },
-  '&:hover': {
-    backgroundColor: theme.palette.grey[100]
-  }
-}));
 
 const MockupContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -131,20 +113,6 @@ const MockupImage = styled('img')(({ theme }) => ({
   }
 }));
 
-const LoadingContainer = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  minHeight: '400px'
-}));
-
-const ErrorContainer = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  minHeight: '400px',
-  padding: theme.spacing(4)
-}));
 
 interface CTAContentProps {
   title: string;
@@ -170,7 +138,24 @@ const CTAContentComponent: React.FC<CTAContentProps> = ({
       <CTAContent>
         <CTATitle>{title}</CTATitle>
         <CTASubtitle>{description}</CTASubtitle>
-        <CTAButton onClick={onCtaClick}>{ctatext}</CTAButton>
+        <Button 
+          variant="secondary"
+          size="large"
+          onClick={onCtaClick}
+          sx={{ 
+            backgroundColor: 'white',
+            color: 'text.primary',
+            letterSpacing: '-0.2px',
+            width: 'fit-content',
+            minWidth: 'auto',
+            marginTop: 2,
+            '&:hover': {
+              backgroundColor: 'grey.100'
+            }
+          }}
+        >
+          {ctatext}
+        </Button>
       </CTAContent>
       
       <MockupContainer>
@@ -185,44 +170,27 @@ const CTAContentComponent: React.FC<CTAContentProps> = ({
 
 const FinalCTASection: React.FC = () => {
   const navigate = useNavigate();
-  const { loading, error, data } = useQuery<GetHomepageSectionsData>(GET_HOMEPAGE_SECTIONS);
+  const { loading, error, data } = useQuery<GetHomepageData>(GET_HOMEPAGE_DATA);
 
   const handleCtaClick = () => {
     navigate('/login');
   };
 
-  if (loading) {
+  if (loading || error) {
     return (
       <CTAContainer>
-        <LoadingContainer>
-          <CircularProgress size={60} sx={{ color: 'white' }} />
-        </LoadingContainer>
-      </CTAContainer>
-    );
-  }
-
-  if (error) {
-    return (
-      <CTAContainer>
-        <ErrorContainer>
-          <Alert severity="error" sx={{ maxWidth: 600, backgroundColor: 'rgba(255,255,255,0.9)' }}>
-            Failed to load CTA section content. Please try again later.
-          </Alert>
-        </ErrorContainer>
+        <LoadingSpinner 
+          variant="section" 
+          error={error} 
+          errorMessage={errorMessages.homepageSections}
+          size={60}
+        />
       </CTAContainer>
     );
   }
 
   const ctaData = data?.homepage?.finalctasection;
-  
-  // Fallback to static content if no data
-  const fallbackData = {
-    title: "Keep every one in the loop",
-    description: "All good things starts with a homepage. Get inspired without breaking your wallet.",
-    ctatext: "Start for free"
-  };
-
-  const content = ctaData || fallbackData;
+  const content = ctaData || fallbackFinalCTAData;
 
   return (
     <CTAContainer>
@@ -232,7 +200,7 @@ const FinalCTASection: React.FC = () => {
           description={content.description}
           ctatext={content.ctatext}
           image={content.image}
-          fallbackImageSrc="/images/project-management.svg"
+          fallbackImageSrc={staticImagePaths.projectManagement}
           fallbackImageAlt="Project management interface showing task organization and team collaboration"
           onCtaClick={handleCtaClick}
         />

@@ -2,16 +2,16 @@ import React from "react";
 import {
 	Box,
 	Typography,
-	Button,
 	Stack,
 	Container,
-	CircularProgress,
-	Alert,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useQuery } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
-import { GET_HOMEPAGE_HERO, GetHomepageHeroData } from "../graphql/queries";
+import { GET_HOMEPAGE_DATA, GetHomepageData } from "../graphql/homepage";
+import LoadingSpinner from "./LoadingSpinner";
+import Button from "./ui/Button";
+import { fallbackHeroData, errorMessages } from "../data/fallbackData";
 
 const HeroContainer = styled(Box)(({ theme }) => ({
 	position: "relative",
@@ -59,19 +59,6 @@ const HeroSubtitle = styled(Typography)(({ theme }) => ({
 	margin: `0 auto ${theme.spacing(4)} auto`,
 }));
 
-const PrimaryButton = styled(Button)(({ theme }) => ({
-	backgroundColor: theme.palette.primary.main,
-	color: theme.palette.primary.contrastText,
-	fontSize: "16px",
-	fontWeight: 600,
-	textTransform: "none",
-	padding: "12px 32px",
-	borderRadius: "24px",
-	marginBottom: theme.spacing(3),
-	"&:hover": {
-		backgroundColor: theme.palette.primary.dark,
-	},
-}));
 
 const GetInTouchLink = styled(Typography)(({ theme }) => ({
 	fontSize: "14px",
@@ -96,61 +83,27 @@ const HeroBackgroundImage = styled("img")({
 	objectFit: "contain",
 });
 
-const LoadingContainer = styled(Box)(({ theme }) => ({
-	display: "flex",
-	justifyContent: "center",
-	alignItems: "center",
-	minHeight: "100vh",
-}));
-
-const ErrorContainer = styled(Box)(({ theme }) => ({
-	display: "flex",
-	justifyContent: "center",
-	alignItems: "center",
-	minHeight: "100vh",
-	padding: theme.spacing(4),
-}));
-
 const HeroSection: React.FC = () => {
 	const navigate = useNavigate();
 	const { loading, error, data } =
-		useQuery<GetHomepageHeroData>(GET_HOMEPAGE_HERO);
+		useQuery<GetHomepageData>(GET_HOMEPAGE_DATA);
 
 	const handleStartForFreeClick = () => {
 		navigate('/login');
 	};
 
-	if (loading) {
+	if (loading || error) {
 		return (
-			<LoadingContainer>
-				<CircularProgress size={60} />
-			</LoadingContainer>
-		);
-	}
-
-	if (error) {
-		return (
-			<ErrorContainer>
-				<Alert severity="error" sx={{ maxWidth: 600 }}>
-					Failed to load hero section content. Please try again later.
-				</Alert>
-			</ErrorContainer>
+			<LoadingSpinner 
+				variant="fullscreen" 
+				error={error} 
+				errorMessage={errorMessages.heroSection}
+			/>
 		);
 	}
 
 	const heroData = data?.homepage?.herosection;
-
-	// Fallback to static content if no data
-	const fallbackData = {
-		title: "Create, inspect, and apply synthetic surveillance broadly.",
-		description:
-			"Start with a stunning homepage. Stay motivated without hurting your pocket.",
-		ctatext: "Start for free",
-		supporttext: "Want to talk or get a live demo?",
-		supportlinktext: "Get in touch →",
-	};
-
-	const content = heroData || fallbackData;
+	const content = heroData || fallbackHeroData;
 
 	return (
 		<HeroContainer>
@@ -180,7 +133,14 @@ const HeroSection: React.FC = () => {
 					<HeroSubtitle>{content.description}</HeroSubtitle>
 
 					<Stack alignItems="center" spacing={2}>
-						<PrimaryButton onClick={handleStartForFreeClick}>{content.ctatext}</PrimaryButton>
+						<Button 
+							variant="primary" 
+							size="large"
+							onClick={handleStartForFreeClick}
+							sx={{ marginBottom: 3 }}
+						>
+							{content.ctatext}
+						</Button>
 
 						<GetInTouchLink>
 							{content.supporttext}{" "}

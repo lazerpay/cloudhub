@@ -1,9 +1,12 @@
 import React from 'react';
-import { Box, Typography, Stack, Container, Button, CircularProgress, Alert } from '@mui/material';
+import { Box, Typography, Stack, Container } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
-import { GET_HOMEPAGE_SECTIONS, GetHomepageSectionsData, HeroImage } from '../graphql/queries';
+import { GET_HOMEPAGE_DATA, GetHomepageData, HeroImage } from '../graphql/homepage';
+import LoadingSpinner from './LoadingSpinner';
+import Button from './ui/Button';
+import { fallbackBottomCTAData, errorMessages } from '../data/fallbackData';
 
 const CTAContainer = styled(Box)(({ theme }) => ({
   padding: theme.spacing(8, 0),
@@ -106,59 +109,7 @@ const CTAButtons = styled(Stack)(({ theme }) => ({
   }
 }));
 
-const SecondaryButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.text.primary,
-  fontSize: '14px',
-  fontWeight: 600,
-  textTransform: 'none',
-  padding: '8px 24px',
-  borderRadius: '32px',
-  minWidth: '140px',
-  [theme.breakpoints.down('sm')]: {
-    fontSize: '16px',
-    padding: '12px 24px',
-    width: '100%',
-    maxWidth: '280px'
-  },
-  '&:hover': {
-    backgroundColor: theme.palette.grey[50]
-  }
-}));
 
-const PrimaryButton = styled(Button)(({ theme }) => ({
-  backgroundColor: theme.palette.primary.main,
-  color: theme.palette.primary.contrastText,
-  fontSize: '14px',
-  fontWeight: 600,
-  textTransform: 'none',
-  padding: '8px 24px',
-  borderRadius: '32px',
-  minWidth: '140px',
-  [theme.breakpoints.down('sm')]: {
-    fontSize: '16px',
-    padding: '12px 24px',
-    width: '100%',
-    maxWidth: '280px'
-  },
-  '&:hover': {
-    backgroundColor: theme.palette.primary.dark
-  }
-}));
-
-const LoadingContainer = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  minHeight: '200px'
-}));
-
-const ErrorContainer = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  minHeight: '200px',
-  padding: theme.spacing(4)
-}));
 
 interface BottomCTAContentProps {
   image?: HeroImage;
@@ -204,8 +155,40 @@ const BottomCTAContentComponent: React.FC<BottomCTAContentProps> = ({
       <CTASubtitle>{subtitle}</CTASubtitle>
       
       <CTAButtons>
-        <SecondaryButton onClick={onSecondaryCtaClick}>{secondaryctatext}</SecondaryButton>
-        <PrimaryButton onClick={onPrimaryCtaClick}>{primaryctatext}</PrimaryButton>
+        <Button 
+          variant="secondary" 
+          onClick={onSecondaryCtaClick}
+          sx={{ 
+            minWidth: '140px',
+            fontSize: '14px',
+            padding: '8px 24px',
+            [theme => theme.breakpoints.down('sm')]: {
+              fontSize: '16px',
+              padding: '12px 24px',
+              width: '100%',
+              maxWidth: '280px'
+            }
+          }}
+        >
+          {secondaryctatext}
+        </Button>
+        <Button 
+          variant="primary" 
+          onClick={onPrimaryCtaClick}
+          sx={{ 
+            minWidth: '140px',
+            fontSize: '14px',
+            padding: '8px 24px',
+            [theme => theme.breakpoints.down('sm')]: {
+              fontSize: '16px',
+              padding: '12px 24px',
+              width: '100%',
+              maxWidth: '280px'
+            }
+          }}
+        >
+          {primaryctatext}
+        </Button>
       </CTAButtons>
     </CTAContent>
   );
@@ -213,7 +196,7 @@ const BottomCTAContentComponent: React.FC<BottomCTAContentProps> = ({
 
 const BottomCTASection: React.FC = () => {
   const navigate = useNavigate();
-  const { loading, error, data } = useQuery<GetHomepageSectionsData>(GET_HOMEPAGE_SECTIONS);
+  const { loading, error, data } = useQuery<GetHomepageData>(GET_HOMEPAGE_DATA);
 
   const handlePrimaryCtaClick = () => {
     navigate('/login');
@@ -224,39 +207,20 @@ const BottomCTASection: React.FC = () => {
     console.log('Request demo clicked');
   };
 
-  if (loading) {
+  if (loading || error) {
     return (
       <CTAContainer>
-        <LoadingContainer>
-          <CircularProgress size={60} />
-        </LoadingContainer>
-      </CTAContainer>
-    );
-  }
-
-  if (error) {
-    return (
-      <CTAContainer>
-        <ErrorContainer>
-          <Alert severity="error" sx={{ maxWidth: 600 }}>
-            Failed to load CTA section content. Please try again later.
-          </Alert>
-        </ErrorContainer>
+        <LoadingSpinner 
+          variant="section" 
+          error={error} 
+          errorMessage={errorMessages.homepageSections}
+        />
       </CTAContainer>
     );
   }
 
   const ctaData = data?.homepage?.bottomctasection;
-  
-  // Fallback to static content if no data
-  const fallbackData = {
-    title: "Increase your team's visibility and alignment",
-    subtitle: "Start for free, flexible for all teams.",
-    secondaryctatext: "Request a demo",
-    primaryctatext: "Start for free"
-  };
-
-  const content = ctaData || fallbackData;
+  const content = ctaData || fallbackBottomCTAData;
 
   return (
     <CTAContainer>
