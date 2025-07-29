@@ -1,136 +1,26 @@
 import React from "react";
 import {
-	AppBar,
 	Toolbar,
 	Stack,
-	Button,
 	Typography,
 	Box,
-	IconButton,
-	Drawer,
 	List,
 	ListItem,
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import CloudhubLogoIcon from "./icons/CloudhubLogoIcon";
 import DropdownArrowIcon from "./icons/DropdownArrowIcon";
-
-const StyledAppBar = styled(AppBar)(({ theme }) => ({
-	backgroundColor: theme.palette.background.default,
-	boxShadow: "none",
-	borderBottom: "none",
-	position: "sticky",
-	top: 0,
-	zIndex: theme.zIndex.appBar,
-}));
-
-const NavButton = styled(Button)<{ active?: boolean }>(({ theme, active }) => ({
-	color: active ? theme.palette.primary.main : theme.palette.text.primary,
-	fontSize: "14px",
-	fontWeight: 600,
-	textTransform: "none",
-	padding: "8px 16px",
-	position: "relative",
-	minWidth: "auto",
-	textDecoration: "none",
-	[theme.breakpoints.down("md")]: {
-		fontSize: "16px",
-		padding: "12px 0",
-		width: "100%",
-		justifyContent: "flex-start",
-	},
-	"&:hover": {
-		backgroundColor: "transparent",
-		"&::after": {
-			width: "100%",
-		},
-	},
-	"&::after": {
-		content: '""',
-		position: "absolute",
-		bottom: 0,
-		left: "50%",
-		transform: "translateX(-50%)",
-		width: active ? "100%" : "0%",
-		height: "2px",
-		backgroundColor: theme.palette.primary.main,
-		transition: "width 0.3s ease-in-out",
-		[theme.breakpoints.down("md")]: {
-			display: "none",
-		},
-	},
-}));
-
-const NavLink = styled(Link)({
-	textDecoration: "none",
-	color: "inherit",
-});
-
-const PrimaryButton = styled(Button)(({ theme }) => ({
-	backgroundColor: theme.palette.primary.main,
-	color: theme.palette.primary.contrastText,
-	fontSize: "14px",
-	fontWeight: 600,
-	textTransform: "none",
-	padding: "8px 24px",
-	borderRadius: "32px",
-	minWidth: "auto",
-	[theme.breakpoints.down("md")]: {
-		fontSize: "16px",
-		padding: "12px 24px",
-		width: "100%",
-	},
-	"&:hover": {
-		backgroundColor: theme.palette.primary.dark,
-	},
-}));
-
-const LoginButton = styled(Button)(({ theme }) => ({
-	color: theme.palette.text.primary,
-	fontSize: "14px",
-	fontWeight: 600,
-	textTransform: "none",
-	padding: "8px 16px",
-	minWidth: "auto",
-	[theme.breakpoints.down("md")]: {
-		fontSize: "16px",
-		padding: "12px 0",
-		width: "100%",
-		justifyContent: "flex-start",
-	},
-	"&:hover": {
-		backgroundColor: "transparent",
-	},
-}));
-
-const MenuButton = styled(IconButton)(({ theme }) => ({
-	display: "none",
-	color: theme.palette.text.primary,
-	padding: theme.spacing(1),
-	[theme.breakpoints.down("md")]: {
-		display: "flex",
-	},
-}));
-
-const DesktopNav = styled(Stack)(({ theme }) => ({
-	[theme.breakpoints.down("md")]: {
-		display: "none",
-	},
-}));
-
-const DesktopActions = styled(Stack)(({ theme }) => ({
-	[theme.breakpoints.down("md")]: {
-		display: "none",
-	},
-}));
-
-const MobileDrawer = styled(Drawer)(({ theme }) => ({
-	"& .MuiDrawer-paper": {
-		width: "100%",
-		padding: theme.spacing(2),
-	},
-}));
+import {
+	StyledAppBar,
+	NavButton,
+	NavLink,
+	PrimaryButton,
+	LoginButton,
+	MenuButton,
+	DesktopNav,
+	DesktopActions,
+	MobileDrawer,
+} from "./styles/Header.styles";
 
 const Header: React.FC = () => {
 	const [mobileOpen, setMobileOpen] = React.useState(false);

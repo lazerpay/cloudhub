@@ -1,36 +1,11 @@
 import React from 'react';
-import { Box, CircularProgress, Alert } from '@mui/material';
-import { styled } from '@mui/material/styles';
-
-const LoadingContainer = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  minHeight: '100vh',
-}));
-
-const ErrorContainer = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  minHeight: '100vh',
-  padding: theme.spacing(4),
-}));
-
-const SectionLoadingContainer = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  minHeight: '400px',
-}));
-
-const SectionErrorContainer = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  minHeight: '400px',
-  padding: theme.spacing(4),
-}));
+import { CircularProgress, Alert } from '@mui/material';
+import {
+  LoadingContainer,
+  ErrorContainer,
+  SectionLoadingContainer,
+  SectionErrorContainer,
+} from './styles/LoadingSpinner.styles';
 
 interface LoadingSpinnerProps {
   size?: number;

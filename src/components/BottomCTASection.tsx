@@ -1,113 +1,20 @@
 import React from 'react';
-import { Box, Typography, Stack, Container } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Box, Stack, Container } from '@mui/material';
 import { useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import { GET_HOMEPAGE_DATA, GetHomepageData, HeroImage } from '../graphql/homepage';
 import LoadingSpinner from './LoadingSpinner';
 import Button from './ui/Button';
 import { fallbackBottomCTAData, errorMessages } from '../data/fallbackData';
-
-const CTAContainer = styled(Box)(({ theme }) => ({
-  padding: theme.spacing(8, 0),
-  backgroundColor: theme.palette.background.default,
-  borderTop: '1px solid rgba(0, 0, 0, 0.05)',
-  [theme.breakpoints.down('md')]: {
-    padding: theme.spacing(6, 0)
-  },
-  [theme.breakpoints.down('sm')]: {
-    padding: theme.spacing(4, 0)
-  }
-}));
-
-const CTAContent = styled(Stack)(({ theme }) => ({
-  textAlign: 'center',
-  alignItems: 'center'
-}));
-
-const CTAIcon = styled(Box)(({ theme }) => ({
-  width: 94,
-  height: 94,
-  background: 'linear-gradient(315deg, #FB432C 0%, #FF591E 100%)',
-  borderRadius: '8px',
-  marginBottom: theme.spacing(5),
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  [theme.breakpoints.down('md')]: {
-    width: 80,
-    height: 80,
-    marginBottom: theme.spacing(4)
-  },
-  [theme.breakpoints.down('sm')]: {
-    width: 64,
-    height: 64,
-    marginBottom: theme.spacing(3)
-  }
-}));
-
-const CTAImage = styled('img')(({ theme }) => ({
-  width: 94,
-  height: 94,
-  objectFit: 'contain',
-  marginBottom: '40px',
-  [theme.breakpoints.down('md')]: {
-    width: 80,
-    height: 80,
-    marginBottom: '32px'
-  },
-  [theme.breakpoints.down('sm')]: {
-    width: 64,
-    height: 64,
-    marginBottom: '24px'
-  }
-}));
-
-const CTATitle = styled(Typography)(({ theme }) => ({
-  fontSize: '26px',
-  fontWeight: 700,
-  color: '#171717',
-  marginBottom: theme.spacing(3),
-  [theme.breakpoints.down('md')]: {
-    fontSize: '24px',
-    marginBottom: theme.spacing(2.5)
-  },
-  [theme.breakpoints.down('sm')]: {
-    fontSize: '20px',
-    marginBottom: theme.spacing(2),
-    lineHeight: '28px'
-  }
-}));
-
-const CTASubtitle = styled(Typography)(({ theme }) => ({
-  fontSize: '20px',
-  fontWeight: 400,
-  color: '#525252',
-  marginBottom: theme.spacing(6),
-  maxWidth: '600px',
-  [theme.breakpoints.down('md')]: {
-    fontSize: '18px',
-    marginBottom: theme.spacing(5),
-    maxWidth: '500px'
-  },
-  [theme.breakpoints.down('sm')]: {
-    fontSize: '16px',
-    marginBottom: theme.spacing(4),
-    maxWidth: '300px',
-    lineHeight: '24px'
-  }
-}));
-
-const CTAButtons = styled(Stack)(({ theme }) => ({
-  flexDirection: 'row',
-  gap: theme.spacing(2.5),
-  [theme.breakpoints.down('sm')]: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    gap: theme.spacing(2),
-    width: '100%'
-  }
-}));
+import {
+  CTAContainer,
+  CTAContent,
+  CTAIcon,
+  CTAImage,
+  CTATitle,
+  CTASubtitle,
+  CTAButtons,
+} from './styles/BottomCTASection.styles';
 
 
 

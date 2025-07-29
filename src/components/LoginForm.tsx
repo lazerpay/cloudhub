@@ -2,20 +2,16 @@ import React, { useState } from "react";
 import {
 	Typography,
 	Stack,
-	TextField,
-	Button,
 	Checkbox,
 	FormControlLabel,
 	Link,
 	Divider,
-	Paper,
 	CircularProgress,
 	Alert,
 	IconButton,
 	InputAdornment,
 	Box,
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import EmailIcon from "@mui/icons-material/Email";
 import LockIcon from "@mui/icons-material/Lock";
@@ -31,88 +27,16 @@ import {
 	createInputChangeHandler,
 	createSocialLoginHandler,
 } from "../utils/loginUtils";
-
-const FormContainer = styled(Paper)(({ theme }) => ({
-	padding: theme.spacing(6),
-	borderRadius: "16px",
-	boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
-	width: "100%",
-	maxWidth: "500px", // Expanded from 400px
-	[theme.breakpoints.down("md")]: {
-		padding: theme.spacing(4),
-		boxShadow: "none",
-		backgroundColor: "transparent",
-		maxWidth: "100%",
-	},
-}));
-
-const FormTitle = styled(Typography)(({ theme }) => ({
-	fontSize: "28px",
-	fontWeight: 700,
-	color: theme.palette.text.primary,
-	marginBottom: theme.spacing(1),
-	textAlign: "center",
-}));
-
-const FormSubtitle = styled(Typography)(({ theme }) => ({
-	fontSize: "16px",
-	color: theme.palette.text.secondary,
-	marginBottom: theme.spacing(4),
-	textAlign: "center",
-}));
-
-const StyledTextField = styled(TextField)(({ theme }) => ({
-	marginBottom: theme.spacing(3),
-	"& .MuiOutlinedInput-root": {
-		borderRadius: "8px",
-	},
-}));
-
-const SubmitButton = styled(Button)(({ theme }) => ({
-	backgroundColor: theme.palette.primary.main,
-	color: theme.palette.primary.contrastText,
-	fontSize: "16px",
-	fontWeight: 600,
-	textTransform: "none",
-	padding: "12px 24px",
-	borderRadius: "8px",
-	marginBottom: theme.spacing(3),
-	"&:hover": {
-		backgroundColor: theme.palette.primary.dark,
-	},
-	"&:disabled": {
-		backgroundColor: theme.palette.grey[300],
-	},
-}));
-
-const SocialButton = styled(Button)(({ theme }) => ({
-	border: `1px solid ${theme.palette.grey[300]}`,
-	color: theme.palette.text.primary,
-	fontSize: "14px",
-	fontWeight: 600,
-	textTransform: "none",
-	padding: "10px 20px",
-	borderRadius: "8px",
-	marginBottom: theme.spacing(2),
-	"&:hover": {
-		backgroundColor: theme.palette.grey[50],
-	},
-}));
-
-const DividerContainer = styled(Box)(({ theme }) => ({
-	display: "flex",
-	alignItems: "center",
-	margin: theme.spacing(3, 0),
-	"& .MuiDivider-root": {
-		flex: 1,
-	},
-}));
-
-const DividerText = styled(Typography)(({ theme }) => ({
-	fontSize: "14px",
-	color: theme.palette.text.secondary,
-	margin: theme.spacing(0, 2),
-}));
+import {
+	FormContainer,
+	FormTitle,
+	FormSubtitle,
+	StyledTextField,
+	SubmitButton,
+	SocialButton,
+	DividerContainer,
+	DividerText,
+} from "./styles/LoginForm.styles";
 
 interface LoginFormProps {
 	onLogin?: (

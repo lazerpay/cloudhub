@@ -1,87 +1,22 @@
 import React from "react";
 import {
-	Box,
-	Typography,
 	Stack,
 	Container,
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
 import { useQuery } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import { GET_HOMEPAGE_DATA, GetHomepageData } from "../graphql/homepage";
 import LoadingSpinner from "./LoadingSpinner";
 import Button from "./ui/Button";
 import { fallbackHeroData, errorMessages } from "../data/fallbackData";
-
-const HeroContainer = styled(Box)(({ theme }) => ({
-	position: "relative",
-	minHeight: "100vh",
-	display: "flex",
-	alignItems: "center",
-	justifyContent: "center",
-	overflow: "hidden",
-	backgroundColor: theme.palette.background.default,
-}));
-
-const HeroContent = styled(Stack)(({ theme }) => ({
-	alignItems: "center",
-	textAlign: "center",
-	zIndex: 2,
-	maxWidth: "900px",
-	margin: "0 auto",
-	transform: "translateY(-10vh)",
-}));
-
-const HeroTitle = styled(Typography)(({ theme }) => ({
-	fontSize: "54px",
-	fontWeight: 600,
-	lineHeight: "63px",
-	letterSpacing: "-1.5px",
-	color: theme.palette.text.primary,
-	marginBottom: theme.spacing(3),
-	[theme.breakpoints.down("md")]: {
-		fontSize: "42px",
-		lineHeight: "50px",
-	},
-	[theme.breakpoints.down("sm")]: {
-		fontSize: "32px",
-		lineHeight: "38px",
-	},
-}));
-
-const HeroSubtitle = styled(Typography)(({ theme }) => ({
-	fontSize: "18px",
-	fontWeight: 400,
-	lineHeight: "30px",
-	color: theme.palette.text.secondary,
-	marginBottom: theme.spacing(4),
-	maxWidth: "600px",
-	margin: `0 auto ${theme.spacing(4)} auto`,
-}));
-
-
-const GetInTouchLink = styled(Typography)(({ theme }) => ({
-	fontSize: "14px",
-	fontWeight: 400,
-	color: theme.palette.text.secondary,
-	cursor: "pointer",
-	"&:hover": {
-		textDecoration: "underline",
-	},
-}));
-
-const HeroBackgroundImage = styled("img")({
-	position: "absolute",
-	top: "50%",
-	left: "50%",
-	transform: "translate(-50%, -50%)",
-	width: "100%",
-	height: "100%",
-	minHeight: "100vh",
-	zIndex: 1,
-	opacity: 0.8,
-	objectFit: "contain",
-});
+import {
+	HeroContainer,
+	HeroContent,
+	HeroTitle,
+	HeroSubtitle,
+	GetInTouchLink,
+	HeroBackgroundImage,
+} from "./styles/HeroSection.styles";
 
 const HeroSection: React.FC = () => {
 	const navigate = useNavigate();

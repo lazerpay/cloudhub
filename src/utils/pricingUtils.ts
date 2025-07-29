@@ -1,4 +1,4 @@
-import { PricingPlan } from '../../graphql/pricing';
+import { PricingPlan } from '../graphql/pricing';
 
 export type BillingPeriod = 'monthly' | 'yearly';
 
