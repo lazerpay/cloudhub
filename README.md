@@ -17,6 +17,8 @@ A modern responsive website built with dynamic content fetched directly from Dat
 - **Apollo Client** - GraphQL client for data fetching and caching
 - **GraphQL** - Type-safe API queries with code generation
 
+## 👨‍💻 How it was built
+
 Here are the loom recordings of some threads used to build this project
 
 - https://www.loom.com/share/6dfa699db0ac4e6c9cd6922921325754?sid=d56289d1-fab2-49b4-a62d-5ef8afe70ae6
