@@ -1,6 +1,6 @@
 # CloudHub - An example website built with Kombai
 
-A modern responsive website built with dynamic content fetched directly from DatoCMS. This website was made entirely by Kombai, an AI agent built for frontend tasks, across 4 threads.
+A modern responsive website built with dynamic content fetched directly from DatoCMS. This website was made entirely by [Kombai](https://kombai.com/), an AI agent built for frontend tasks, across 4 threads.
 
 ## 🛠️ Tech Stack
 
