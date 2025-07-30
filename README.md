@@ -19,7 +19,7 @@ A modern responsive website built with dynamic content fetched directly from Dat
 
 ## 👨‍💻 How it was built
 
-Here are the loom recordings of some threads used to build this project
+Here are the loom recordings of some threads used to build this project with Kombai
 
 - https://www.loom.com/share/6dfa699db0ac4e6c9cd6922921325754?sid=d56289d1-fab2-49b4-a62d-5ef8afe70ae6
 - https://www.loom.com/share/aa19f213cbb84d70a0dd89c778a2e39c?sid=6952f5c2-ee46-4ed4-a0de-59b3d9e85069
