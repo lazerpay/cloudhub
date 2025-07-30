@@ -26,7 +26,7 @@ Here are the loom recordings of some threads used to build this project with Kom
 - https://www.loom.com/share/1e132dfa2b8b47f59c8c846c7d03d07f?sid=152388aa-b795-4164-9225-618fa39d66fe
 - https://www.loom.com/share/7cc98d6106c34f25a560e4dc6ad19ac1?sid=5a8b6390-b559-4998-a027-0ac9b42181fb
 
-Some additional threads used for refactoring the code
+Some additional threads used for refactoring the code using Kombai
 
 - https://www.loom.com/share/2a302fc6358b48d5be232297ceff3003?sid=cd07e206-75ea-4c33-8930-79d10d6a2e8b
 - https://www.loom.com/share/8d6967d5ab2f45eaabb89a29a5ac84fe?sid=c35aff90-0203-4c7f-8c10-a78bd5e07942
