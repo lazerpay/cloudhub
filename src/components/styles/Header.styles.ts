@@ -19,10 +19,12 @@ export const NavButton = styled(Button)<{ active?: boolean }>(({ theme, active }
   minWidth: 'auto',
   textDecoration: 'none',
   [theme.breakpoints.down('md')]: {
-    fontSize: theme.typography.body2.fontSize,
-    padding: theme.spacing(1.5, 0),
+    fontSize: '16px',
+    fontWeight: 400,
+    padding: theme.spacing(2, 0),
     width: '100%',
     justifyContent: 'flex-start',
+    color: theme.palette.text.primary,
   },
   '&:hover': {
     backgroundColor: 'transparent',
@@ -55,13 +57,18 @@ export const PrimaryButton = styled(Button)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
   color: theme.palette.primary.contrastText,
   ...theme.typography.button,
-  padding: theme.spacing(1, 3),
+  padding: theme.spacing(1.5, 3),
   borderRadius: '32px',
   minWidth: 'auto',
+  fontSize: '14px',
+  fontWeight: 600,
   [theme.breakpoints.down('md')]: {
-    fontSize: theme.typography.body2.fontSize,
-    padding: theme.spacing(1.5, 3),
+    fontSize: '16px',
+    fontWeight: 600,
+    padding: theme.spacing(2, 3),
     width: '100%',
+    borderRadius: '32px',
+    marginTop: theme.spacing(1),
   },
   '&:hover': {
     backgroundColor: theme.palette.primary.dark,
@@ -73,11 +80,15 @@ export const LoginButton = styled(Button)(({ theme }) => ({
   ...theme.typography.button,
   padding: theme.spacing(1, 2),
   minWidth: 'auto',
+  fontSize: '14px',
+  fontWeight: 600,
   [theme.breakpoints.down('md')]: {
-    fontSize: theme.typography.body2.fontSize,
-    padding: theme.spacing(1.5, 0),
+    fontSize: '16px',
+    fontWeight: 400,
+    padding: theme.spacing(2, 0),
     width: '100%',
     justifyContent: 'flex-start',
+    color: theme.palette.text.primary,
   },
   '&:hover': {
     backgroundColor: 'transparent',
@@ -108,6 +119,20 @@ export const DesktopActions = styled(Stack)(({ theme }) => ({
 export const MobileDrawer = styled(Drawer)(({ theme }) => ({
   '& .MuiDrawer-paper': {
     width: '100%',
-    padding: theme.spacing(2),
+    padding: theme.spacing(3, 2),
+    backgroundColor: theme.palette.background.default,
   },
+}));
+
+export const MobileMenuHeader = styled(Stack)(({ theme }) => ({
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  marginBottom: theme.spacing(3),
+  paddingBottom: theme.spacing(2),
+  borderBottom: `1px solid ${theme.palette.grey[200]}`,
+}));
+
+export const CloseButton = styled(IconButton)(({ theme }) => ({
+  color: theme.palette.text.primary,
+  padding: theme.spacing(1),
 }));

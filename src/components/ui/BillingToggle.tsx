@@ -19,6 +19,10 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   borderRadius: '32px',
   padding: theme.spacing(0.5),
   marginBottom: theme.spacing(6),
+  [theme.breakpoints.down('sm')]: {
+    marginBottom: theme.spacing(4),
+    borderRadius: '24px',
+  },
   '& .MuiToggleButton-root': {
     border: 'none',
     borderRadius: '28px',
@@ -27,6 +31,13 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
     fontWeight: 600,
     textTransform: 'none',
     color: theme.palette.text.secondary,
+    minWidth: '80px',
+    [theme.breakpoints.down('sm')]: {
+      borderRadius: '20px',
+      padding: theme.spacing(0.75, 2.5),
+      fontSize: '13px',
+      minWidth: '70px',
+    },
     '&.Mui-selected': {
       backgroundColor: theme.palette.common.white,
       color: theme.palette.text.primary,
@@ -50,6 +61,11 @@ const SavingsBadge = styled(Chip)<{ visible?: boolean }>(
     marginLeft: theme.spacing(1.5),
     opacity: visible ? 1 : 0.5,
     transition: 'opacity 0.3s ease',
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: 0,
+      marginTop: theme.spacing(1),
+      fontSize: '11px',
+    },
   })
 );
 
@@ -57,6 +73,11 @@ const ToggleContainer = styled(Stack)(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'center',
   marginBottom: theme.spacing(6),
+  flexWrap: 'wrap',
+  [theme.breakpoints.down('sm')]: {
+    marginBottom: theme.spacing(4),
+    gap: theme.spacing(1),
+  },
 }));
 
 const BillingToggle: React.FC<BillingToggleProps> = ({

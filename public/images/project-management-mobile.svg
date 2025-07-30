@@ -1,0 +1,41 @@
+<svg viewBox="0 0 343 10" x="0" y="0" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="Group_19" xmlns="http://www.w3.org/2000/svg">
+<path id="Rectangle_11" d="M0,3.38c0,-1.87 1.5145,-3.38 3.3826,-3.38h336.2344c1.869,0 3.383,1.51 3.383,3.38v6.62h-343z" fill="#202020"/>
+<g id="Group_20">
+<g id="Group_21">
+<path id="Vector_51" d="M310.543,3.41l0.999,-1l0.999,1" stroke="white" stroke-width="0.439744" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Line_8" d="M311.541,5.08v-2.67" stroke="white" stroke-width="0.439744" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_52" d="M312.683,4.32h0.571c0.05,0 0.099,0.02 0.134,0.05c0.036,0.04 0.056,0.09 0.056,0.14v2.47c0,0.05 -0.02,0.1 -0.056,0.14c-0.035,0.03 -0.084,0.05 -0.134,0.05h-3.425c-0.051,0 -0.099,-0.02 -0.135,-0.05c-0.035,-0.04 -0.055,-0.09 -0.055,-0.14v-2.47c0,-0.05 0.02,-0.1 0.055,-0.14c0.036,-0.03 0.084,-0.05 0.135,-0.05h0.571" stroke="white" stroke-width="0.439744" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="Group_22">
+<path id="Line_9" d="M319.596,5.08h4.186" stroke="white" stroke-width="0.439744" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Line_10" d="M321.688,2.98v4.19" stroke="white" stroke-width="0.439744" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="Group_23">
+<path id="Vector_53" d="M332.788,6.03h1.142v-3.05h-3.044v1.15" stroke="white" stroke-width="0.439744" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_54" d="M332.789,4.13h-3.045v3.04h3.045z" stroke="white" stroke-width="0.439744" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="Group_24">
+<path id="Vector_55" d="M36.5321,6.77l-1.6913,-1.69l1.6913,-1.69" stroke="white" stroke-width="0.439744" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="Group_25" opacity="0.5">
+<path id="Vector_56" d="M42.6211,3.39l1.6913,1.69l-1.6913,1.69" stroke="white" stroke-width="0.439744" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="Group_26">
+<path id="Vector_57" d="M28.5311,3.08h-3.6152c-0.1051,0 -0.1903,0.08 -0.1903,0.19v3.62c0,0.1 0.0852,0.19 0.1903,0.19h3.6152c0.105,0 0.1902,-0.09 0.1902,-0.19v-3.62c0,-0.11 -0.0852,-0.19 -0.1902,-0.19z" stroke="white" stroke-width="0.439744" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Line_11" d="M26.3428,3.08v4" stroke="white" stroke-width="0.439744" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Line_12" d="M26.3425,4.13h-1.5222" stroke="white" stroke-width="0.439744" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="Group_27">
+<circle id="Ellipse_5" cx="6.5" cy="4.5" r="1.5" fill="#F83523"/>
+<circle id="Ellipse_6" cx="11.5" cy="4.5" r="1.5" fill="#FFC40C"/>
+<circle id="Ellipse_7" cx="16.5" cy="4.5" r="1.5" fill="#16C933"/>
+</g>
+</g>
+<g id="Group_28">
+<rect id="Rectangle_12" opacity="0.06" x="123" y="2" width="96" height="6" rx="3" fill="white"/>
+<g id="Group_29">
+<path id="Vector_58" d="M216.45,4.7h0.634v-0.63" stroke="white" stroke-width="0.366453" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_59" d="M216.634,5.9c-0.163,0.16 -0.37,0.28 -0.596,0.32c-0.225,0.05 -0.459,0.02 -0.672,-0.07c-0.212,-0.08 -0.394,-0.23 -0.522,-0.42c-0.127,-0.2 -0.196,-0.42 -0.196,-0.65c0,-0.23 0.069,-0.46 0.196,-0.65c0.128,-0.19 0.31,-0.34 0.522,-0.43c0.213,-0.08 0.447,-0.11 0.672,-0.06c0.226,0.04 0.433,0.15 0.596,0.32l0.449,0.44" stroke="white" stroke-width="0.366453" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</g>
+</g></svg>

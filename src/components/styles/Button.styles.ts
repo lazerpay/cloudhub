@@ -13,16 +13,29 @@ export const StyledButton = styled(MuiButton)<{
       padding: theme.spacing(1, 2),
       fontSize: theme.typography.caption.fontSize,
       borderRadius: '20px',
+      [theme.breakpoints.down('sm')]: {
+        padding: theme.spacing(0.75, 1.5),
+        fontSize: '12px',
+      },
     },
     medium: {
       padding: theme.spacing(1.5, 3),
       fontSize: theme.typography.body2.fontSize,
       borderRadius: '24px',
+      [theme.breakpoints.down('sm')]: {
+        padding: theme.spacing(1.25, 2.5),
+        fontSize: '14px',
+      },
     },
     large: {
       padding: theme.spacing(1.5, 4),
       fontSize: theme.typography.body2.fontSize,
       borderRadius: '32px',
+      [theme.breakpoints.down('sm')]: {
+        padding: theme.spacing(1.5, 3),
+        fontSize: '15px',
+        borderRadius: '28px',
+      },
     },
   };
 

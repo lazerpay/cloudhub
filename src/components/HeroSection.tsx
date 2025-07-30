@@ -16,6 +16,7 @@ import {
 	HeroSubtitle,
 	GetInTouchLink,
 	HeroBackgroundImage,
+	HeroButtonContainer,
 } from "./styles/HeroSection.styles";
 
 const HeroSection: React.FC = () => {
@@ -58,21 +59,29 @@ const HeroSection: React.FC = () => {
 				maxWidth="lg"
 				sx={{
 					display: "flex",
-					alignItems: "center",
-					minHeight: "100vh",
+					alignItems: { xs: "flex-start", md: "center" },
+					minHeight: { xs: "auto", md: "100vh" },
+					height: { xs: "auto", md: "100vh" },
+					px: { xs: 0, md: 3 },
+					pt: { xs: 0, md: 0 },
 				}}
 			>
-				<HeroContent spacing={3}>
+				<HeroContent spacing={{ xs: 2, md: 3 }}>
 					<HeroTitle>{content.title}</HeroTitle>
 
 					<HeroSubtitle>{content.description}</HeroSubtitle>
 
-					<Stack alignItems="center" spacing={2}>
+					<HeroButtonContainer spacing={2}>
 						<Button 
 							variant="primary" 
 							size="large"
 							onClick={handleStartForFreeClick}
-							sx={{ marginBottom: 3 }}
+							sx={{ 
+								marginBottom: { xs: 2, md: 3 },
+								width: { xs: '100%', md: 'auto' },
+								minWidth: { xs: 'auto', md: '160px' },
+								alignSelf: { xs: 'flex-start', md: 'center' },
+							}}
 						>
 							{content.ctatext}
 						</Button>
@@ -81,7 +90,7 @@ const HeroSection: React.FC = () => {
 							{content.supporttext}{" "}
 							<strong>{content.supportlinktext}</strong>
 						</GetInTouchLink>
-					</Stack>
+					</HeroButtonContainer>
 				</HeroContent>
 			</Container>
 		</HeroContainer>

@@ -14,9 +14,11 @@ import {
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import LoadingSpinner from "../components/LoadingSpinner";
-import PricingCard from "../components/ui/PricingCard";
+import AdaptivePricingCard from "../components/ui/AdaptivePricingCard";
 import BillingToggle from "../components/ui/BillingToggle";
 import Button from "../components/ui/Button";
+import ResponsivePricingGrid from "../components/ui/ResponsivePricingGrid";
+import ResponsiveHeroSection from "../components/ui/ResponsiveHeroSection";
 import {
 	fallbackPricingPlans,
 	fallbackPricingPageData,
@@ -39,11 +41,14 @@ const PricingContainer = styled(Box)(({ theme }) => ({
 const HeroSection = styled(Box)(({ theme }) => ({
 	padding: theme.spacing(8, 0),
 	textAlign: "center",
+	[theme.breakpoints.down("lg")]: {
+		padding: theme.spacing(7, 0),
+	},
 	[theme.breakpoints.down("md")]: {
 		padding: theme.spacing(6, 0),
 	},
 	[theme.breakpoints.down("sm")]: {
-		padding: theme.spacing(4, 0),
+		padding: theme.spacing(4, 0, 3, 0),
 	},
 }));
 
@@ -89,11 +94,14 @@ const HeroSubtitle = styled(Typography)(({ theme }) => ({
 
 const PricingSection = styled(Box)(({ theme }) => ({
 	padding: theme.spacing(8, 0),
+	[theme.breakpoints.down("lg")]: {
+		padding: theme.spacing(7, 0),
+	},
 	[theme.breakpoints.down("md")]: {
 		padding: theme.spacing(6, 0),
 	},
 	[theme.breakpoints.down("sm")]: {
-		padding: theme.spacing(4, 0),
+		padding: theme.spacing(3, 0, 4, 0),
 	},
 }));
 
@@ -101,21 +109,33 @@ const PricingGrid = styled(Stack)(({ theme }) => ({
 	flexDirection: "row",
 	gap: theme.spacing(4),
 	justifyContent: "center",
+	alignItems: "stretch",
+	flexWrap: "wrap",
+	[theme.breakpoints.down("lg")]: {
+		gap: theme.spacing(3),
+	},
 	[theme.breakpoints.down("md")]: {
 		flexDirection: "column",
 		alignItems: "center",
 		gap: theme.spacing(3),
+		flexWrap: "nowrap",
+	},
+	[theme.breakpoints.down("sm")]: {
+		gap: theme.spacing(2),
 	},
 }));
 
 const CTASection = styled(Box)(({ theme }) => ({
 	padding: theme.spacing(8, 0),
 	textAlign: "center",
+	[theme.breakpoints.down("lg")]: {
+		padding: theme.spacing(7, 0),
+	},
 	[theme.breakpoints.down("md")]: {
 		padding: theme.spacing(6, 0),
 	},
 	[theme.breakpoints.down("sm")]: {
-		padding: theme.spacing(4, 0),
+		padding: theme.spacing(4, 0, 5, 0),
 	},
 }));
 
@@ -138,8 +158,13 @@ const CTASubtitle = styled(Typography)(({ theme }) => ({
 	marginBottom: theme.spacing(4),
 	maxWidth: "500px",
 	margin: "0 auto",
+	[theme.breakpoints.down("md")]: {
+		maxWidth: "400px",
+	},
 	[theme.breakpoints.down("sm")]: {
 		fontSize: "16px",
+		maxWidth: "100%",
+		paddingX: theme.spacing(2),
 	},
 }));
 
@@ -180,24 +205,22 @@ const PricingPage: React.FC = () => {
 		<PricingContainer>
 			<Header />
 
-			<HeroSection>
-				<Container maxWidth="lg">
-					<HeroTitle>{heroTitle}</HeroTitle>
-					<HeroSubtitle>{heroSubtitle}</HeroSubtitle>
-
-					<BillingToggle
-						value={billingPeriod}
-						onChange={handleBillingChange}
-						showSavingsBadge={true}
-					/>
-				</Container>
-			</HeroSection>
+			<ResponsiveHeroSection
+				title={heroTitle}
+				subtitle={heroSubtitle}
+			>
+				<BillingToggle
+					value={billingPeriod}
+					onChange={handleBillingChange}
+					showSavingsBadge={true}
+				/>
+			</ResponsiveHeroSection>
 
 			<PricingSection>
-				<Container maxWidth="lg">
-					<PricingGrid>
+				<Container maxWidth="lg" sx={{ px: { xs: 2, sm: 3, md: 4 } }}>
+					<ResponsivePricingGrid>
 						{pricingPlans.map((plan) => (
-							<PricingCard
+							<AdaptivePricingCard
 								key={plan.name}
 								name={plan.name}
 								description={plan.description}
@@ -210,12 +233,12 @@ const PricingPage: React.FC = () => {
 								onButtonClick={() => handlePlanSelection(plan.name)}
 							/>
 						))}
-					</PricingGrid>
+					</ResponsivePricingGrid>
 				</Container>
 			</PricingSection>
 
 			<CTASection>
-				<Container maxWidth="lg">
+				<Container maxWidth="lg" sx={{ px: { xs: 2, sm: 3, md: 4 } }}>
 					<CTATitle>
 						{pricingData?.bottomctasectiontitle ||
 							fallbackPricingPageData.bottomctasectiontitle}
@@ -227,7 +250,11 @@ const PricingPage: React.FC = () => {
 					<Button
 						variant="primary"
 						size="large"
-						sx={{ marginTop: 3 }}
+						sx={{ 
+							marginTop: 3,
+							px: { xs: 4, sm: 6 },
+							py: { xs: 1.5, sm: 2 }
+						}}
 					>
 						{pricingData?.bottomctatext ||
 							fallbackPricingPageData.bottomctatext}

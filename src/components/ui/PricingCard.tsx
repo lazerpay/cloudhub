@@ -35,9 +35,24 @@ const Card = styled(Paper)<{ popular?: boolean }>(({ theme, popular }) => ({
   position: 'relative',
   maxWidth: '350px',
   width: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
+  '&:hover': {
+    transform: 'translateY(-4px)',
+    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.12)',
+  },
+  [theme.breakpoints.down('lg')]: {
+    maxWidth: '320px',
+  },
+  [theme.breakpoints.down('md')]: {
+    maxWidth: '100%',
+    margin: '0 auto',
+  },
   [theme.breakpoints.down('sm')]: {
     padding: theme.spacing(3),
     maxWidth: '100%',
+    margin: '0',
   },
 }));
 
@@ -57,6 +72,9 @@ const PlanName = styled(Typography)(({ theme }) => ({
   fontWeight: 600,
   color: theme.palette.text.primary,
   marginBottom: theme.spacing(1),
+  [theme.breakpoints.down('sm')]: {
+    fontSize: '20px',
+  },
 }));
 
 const PlanDescription = styled(Typography)(({ theme }) => ({
@@ -74,6 +92,12 @@ const Price = styled(Typography)(({ theme }) => ({
   fontWeight: 700,
   color: theme.palette.text.primary,
   lineHeight: 1,
+  [theme.breakpoints.down('md')]: {
+    fontSize: '40px',
+  },
+  [theme.breakpoints.down('sm')]: {
+    fontSize: '36px',
+  },
 }));
 
 const PriceUnit = styled(Typography)(({ theme }) => ({
@@ -84,11 +108,18 @@ const PriceUnit = styled(Typography)(({ theme }) => ({
 
 const FeatureList = styled(List)(({ theme }) => ({
   padding: 0,
+  flex: 1,
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'flex-start',
 }));
 
 const FeatureItem = styled(ListItem)(({ theme }) => ({
   padding: theme.spacing(0.5, 0),
   alignItems: 'flex-start',
+  [theme.breakpoints.down('sm')]: {
+    padding: theme.spacing(0.75, 0),
+  },
 }));
 
 const FeatureIcon = styled(ListItemIcon)(({ theme }) => ({
@@ -102,6 +133,16 @@ const FeatureText = styled(ListItemText)(({ theme }) => ({
     fontSize: '14px',
     color: theme.palette.text.primary,
   },
+}));
+
+const CardContent = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  height: '100%',
+}));
+
+const CardFooter = styled(Box)(({ theme }) => ({
+  paddingTop: theme.spacing(2),
 }));
 
 const PricingCard: React.FC<PricingCardProps> = ({
@@ -119,35 +160,41 @@ const PricingCard: React.FC<PricingCardProps> = ({
     <Card popular={popular}>
       {popular && <PopularBadge label="Most Popular" />}
       
-      <PlanName>{name}</PlanName>
-      <PlanDescription>{description}</PlanDescription>
-      
-      <PriceContainer>
-        <Stack direction="row" alignItems="baseline">
-          <Price>{price}</Price>
-          {unit && <PriceUnit>{unit}</PriceUnit>}
-        </Stack>
-      </PriceContainer>
-      
-      <Button
-        variant={buttonVariant}
-        fullWidth
-        onClick={onButtonClick}
-        sx={{ marginBottom: 3 }}
-      >
-        {buttonText}
-      </Button>
-      
-      <FeatureList>
-        {features.map((feature, index) => (
-          <FeatureItem key={index}>
-            <FeatureIcon>
-              <CheckIcon width={16} height={16} color="#22C55E" />
-            </FeatureIcon>
-            <FeatureText primary={feature} />
-          </FeatureItem>
-        ))}
-      </FeatureList>
+      <CardContent>
+        <Box>
+          <PlanName>{name}</PlanName>
+          <PlanDescription>{description}</PlanDescription>
+          
+          <PriceContainer>
+            <Stack direction="row" alignItems="baseline">
+              <Price>{price}</Price>
+              {unit && <PriceUnit>{unit}</PriceUnit>}
+            </Stack>
+          </PriceContainer>
+          
+          <Button
+            variant={buttonVariant}
+            fullWidth
+            onClick={onButtonClick}
+            sx={{ marginBottom: 3 }}
+          >
+            {buttonText}
+          </Button>
+        </Box>
+        
+        <CardFooter>
+          <FeatureList>
+            {features.map((feature, index) => (
+              <FeatureItem key={index}>
+                <FeatureIcon>
+                  <CheckIcon width={16} height={16} color="#22C55E" />
+                </FeatureIcon>
+                <FeatureText primary={feature} />
+              </FeatureItem>
+            ))}
+          </FeatureList>
+        </CardFooter>
+      </CardContent>
     </Card>
   );
 };

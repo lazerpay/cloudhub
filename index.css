@@ -21,4 +21,72 @@ body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Responsive utilities */
+@media (max-width: 600px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 13px;
+  }
+}
+
+/* Ensure images are responsive */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Improve touch targets on mobile */
+@media (max-width: 768px) {
+  button, 
+  [role="button"],
+  input[type="button"],
+  input[type="submit"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Mobile-first responsive design improvements */
+@media (max-width: 900px) {
+  /* Ensure proper spacing on mobile */
+  .MuiContainer-root {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  
+  /* Improve mobile drawer performance */
+  .MuiDrawer-paper {
+    will-change: transform;
+  }
+  
+  /* Hero section mobile optimizations */
+  .MuiContainer-root {
+    padding-top: 0 !important;
+  }
+}
+
+/* Prevent horizontal scroll on mobile */
+@media (max-width: 768px) {
+  body {
+    overflow-x: hidden;
+  }
+  
+  /* Ensure mobile navigation is accessible */
+  .MuiDrawer-paper {
+    max-height: 100vh;
+    overflow-y: auto;
+  }
+  
+  /* Mobile hero section adjustments */
+  .MuiContainer-root {
+    align-items: flex-start !important;
+  }
 }

@@ -20,6 +20,8 @@ import {
 	DesktopNav,
 	DesktopActions,
 	MobileDrawer,
+	MobileMenuHeader,
+	CloseButton,
 } from "./styles/Header.styles";
 
 const Header: React.FC = () => {
@@ -52,44 +54,59 @@ const Header: React.FC = () => {
 	];
 
 	const mobileMenu = (
-		<Box sx={{ pt: 2 }}>
-			<List>
+		<Box>
+			<MobileMenuHeader direction="row">
+				<CloudhubLogoIcon
+					width={104}
+					height={23}
+					color="#000000"
+				/>
+				<CloseButton onClick={handleDrawerToggle}>
+					<Box
+						sx={{
+							width: 24,
+							height: 2,
+							backgroundColor: "#000000",
+							position: "relative",
+							transform: "rotate(45deg)",
+							"&::after": {
+								content: '""',
+								position: "absolute",
+								width: 24,
+								height: 2,
+								backgroundColor: "#000000",
+								left: 0,
+								top: 0,
+								transform: "rotate(-90deg)",
+							},
+						}}
+					/>
+				</CloseButton>
+			</MobileMenuHeader>
+			
+			<List sx={{ pt: 0 }}>
 				{navigationItems.map((item) => (
-					<ListItem key={item.label} sx={{ px: 0 }}>
-						<Stack
-							direction="row"
-							alignItems="center"
-							spacing={1}
-							width="100%"
-						>
-							{item.path === "#" ? (
+					<ListItem key={item.label} sx={{ px: 0, py: 0 }}>
+						{item.path === "#" ? (
+							<NavButton active={item.active}>
+								{item.label}
+							</NavButton>
+						) : (
+							<NavLink
+								to={item.path}
+								onClick={handleDrawerToggle}
+							>
 								<NavButton active={item.active}>
 									{item.label}
 								</NavButton>
-							) : (
-								<NavLink
-									to={item.path}
-									onClick={handleDrawerToggle}
-								>
-									<NavButton active={item.active}>
-										{item.label}
-									</NavButton>
-								</NavLink>
-							)}
-							{item.hasDropdown && (
-								<DropdownArrowIcon
-									width={10}
-									height={6}
-									color="#282828"
-								/>
-							)}
-						</Stack>
+							</NavLink>
+						)}
 					</ListItem>
 				))}
-				<ListItem sx={{ px: 0, pt: 2 }}>
+				<ListItem sx={{ px: 0, py: 0, mt: 2 }}>
 					<LoginButton onClick={handleLoginClick}>Login</LoginButton>
 				</ListItem>
-				<ListItem sx={{ px: 0 }}>
+				<ListItem sx={{ px: 0, py: 0 }}>
 					<PrimaryButton onClick={handleStartForFreeClick}>
 						Start for free
 					</PrimaryButton>
@@ -102,7 +119,7 @@ const Header: React.FC = () => {
 		<StyledAppBar>
 			<Toolbar
 				sx={{
-					justifyContent: "space-evenly",
+					justifyContent: "space-between",
 					px: { xs: 2, md: 10 },
 					py: { xs: 1, md: 2 },
 					minHeight: { xs: 56, md: 64 },
