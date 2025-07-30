@@ -14,6 +14,7 @@ export {
   type FinalCTASection,
   type BottomCTASection,
   type ClientSection,
+  type CompanyLogosSection,
   type Homepage,
   type GetHomepageData,
 } from './homepage';

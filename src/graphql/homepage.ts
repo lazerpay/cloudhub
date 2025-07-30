@@ -147,6 +147,36 @@ export const GET_HOMEPAGE_DATA = gql`
         secondaryctatext
         primaryctatext
       }
+      companylogossection {
+        patreon {
+          url
+          alt
+        }
+        airbnb {
+          url
+          alt
+        }
+        fiberplane {
+          url
+          alt
+        }
+        coinbase {
+          url
+          alt
+        }
+        griffin {
+          url
+          alt
+        }
+        helpscout {
+          url
+          alt
+        }
+        plaid {
+          url
+          alt
+        }
+      }
     }
   }
 `;
@@ -226,6 +256,16 @@ export interface BottomCTASection {
   primaryctatext: string;
 }
 
+export interface CompanyLogosSection {
+  patreon?: HeroImage;
+  airbnb?: HeroImage;
+  fiberplane?: HeroImage;
+  coinbase?: HeroImage;
+  griffin?: HeroImage;
+  helpscout?: HeroImage;
+  plaid?: HeroImage;
+}
+
 export interface ClientSection {
   title: string;
   crowdstrike?: HeroImage;
@@ -248,6 +288,7 @@ export interface Homepage {
   testimonialsection: TestimonialsSection;
   finalctasection: FinalCTASection;
   bottomctasection: BottomCTASection;
+  companylogossection: CompanyLogosSection;
 }
 
 export interface GetHomepageData {

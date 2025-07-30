@@ -1,28 +1,94 @@
 import React from 'react';
-import { Box, Container } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Container, useMediaQuery, useTheme } from '@mui/material';
+import { useQuery } from '@apollo/client';
+import { GET_HOMEPAGE_DATA, GetHomepageData, HeroImage } from '../graphql/homepage';
+import LoadingSpinner from './LoadingSpinner';
+import {
+  LogosContainer,
+  LogosGrid,
+  LogoImage,
+  LogoWrapper,
+} from './styles/CompanyLogos.styles';
 
-const LogosContainer = styled(Box)(({ theme }) => ({
-  padding: theme.spacing(8, 0),
-  backgroundColor: theme.palette.background.default
-}));
+interface LogoItemProps {
+  image?: HeroImage;
+  alt: string;
+  fallbackSrc?: string;
+}
 
-const LogosImage = styled('img')({
-  width: '100%',
-  height: 'auto',
-  maxWidth: '1280px',
-  display: 'block',
-  margin: '0 auto'
-});
+const LogoItem: React.FC<LogoItemProps> = ({ image, alt, fallbackSrc }) => {
+  // Don't render if no image URL is available
+  if (!image?.url && !fallbackSrc) {
+    return null;
+  }
+
+  return (
+    <LogoWrapper>
+      <LogoImage 
+        src={image?.url || fallbackSrc}
+        alt={image?.alt || alt}
+      />
+    </LogoWrapper>
+  );
+};
 
 const CompanyLogos: React.FC = () => {
+  const { loading, error, data } = useQuery<GetHomepageData>(GET_HOMEPAGE_DATA);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+  if (loading) {
+    return (
+      <LogosContainer>
+        <Container maxWidth="xl">
+          <LoadingSpinner variant="section" />
+        </Container>
+      </LogosContainer>
+    );
+  }
+
+  if (error) {
+    return (
+      <LogosContainer>
+        <Container maxWidth="xl">
+          <LoadingSpinner 
+            variant="section" 
+            error={error}
+            errorMessage="Failed to load company logos"
+          />
+        </Container>
+      </LogosContainer>
+    );
+  }
+
+  const companyLogos = data?.homepage?.companylogossection;
+
+  // Define all logos with their data
+  const allLogos = [
+    { image: companyLogos?.patreon, alt: "Patreon" },
+    { image: companyLogos?.airbnb, alt: "Airbnb" },
+    { image: companyLogos?.fiberplane, alt: "Fiberplane" },
+    { image: companyLogos?.coinbase, alt: "Coinbase" },
+    { image: companyLogos?.griffin, alt: "Griffin" },
+    { image: companyLogos?.helpscout, alt: "Help Scout" },
+    { image: companyLogos?.plaid, alt: "Plaid" },
+  ];
+
+  // On mobile, show only first 6 logos (excluding plaid which is last)
+  const logosToShow = isMobile ? allLogos.slice(0, 6) : allLogos;
+
   return (
     <LogosContainer>
       <Container maxWidth="xl">
-        <LogosImage 
-          src="/images/company-logos.svg" 
-          alt="Trusted by companies like Patreon, Airbnb, Fiberplane, Coinbase, Griffin, Help Scout, and Plaid"
-        />
+        <LogosGrid>
+          {logosToShow.map((logo, index) => (
+            <LogoItem 
+              key={logo.alt}
+              image={logo.image}
+              alt={logo.alt}
+            />
+          ))}
+        </LogosGrid>
       </Container>
     </LogosContainer>
   );
