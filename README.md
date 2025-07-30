@@ -1,6 +1,6 @@
 # CloudHub
 
-A modern React application for team collaboration and project management.
+A responsive website for a team collaboration and project management app.
 
 ## 🛠️ Tech Stack
 
